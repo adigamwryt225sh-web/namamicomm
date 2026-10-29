@@ -1,0 +1,270 @@
+:root {
+    --ink: #2b1d0f; /* Dark, aged brown ink */
+    --red-ink: #7a1515; /* Dried blood / ancient red for headers */
+    --paper-base: #d1bfae; /* Base parchment color */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: #111; /* Dark background behind the paper */
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 24.5px; 
+    line-height: 1.15; 
+}
+
+.ancient-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1450px;
+    height: 94vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Arrow Navigation */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.4);
+    border: none;
+    font-size: 60px;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.2s;
+    padding: 10px;
+}
+.nav-arrow:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.8); transform: translateY(-50%) scale(1.1); }
+.nav-arrow:disabled { opacity: 0; cursor: not-allowed; }
+.left-arrow { left: -10px; }
+.right-arrow { right: -10px; }
+
+.presentation-container {
+    width: 92%;
+    height: 100%;
+    position: relative;
+}
+
+/* --- ANCIENT TORN PAPER AESTHETIC --- */
+.slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: var(--paper-base);
+    
+    /* Layered gradients to create wrinkles, stains, and burned edges */
+    background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E"),
+        radial-gradient(circle at 15% 25%, rgba(139, 69, 19, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 85% 75%, rgba(92, 51, 23, 0.08) 0%, transparent 35%),
+        linear-gradient(88deg, rgba(0,0,0,0.01) 48%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.01) 52%),
+        radial-gradient(circle at 50% 50%, transparent 60%, rgba(50, 30, 10, 0.5) 120%);
+    
+    /* Jagged, torn paper edges using Clip-Path */
+    clip-path: polygon(
+        1% 2%, 4% 0%, 8% 2%, 15% 0%, 22% 2%, 35% 0%, 45% 2%, 55% 0%, 65% 3%, 78% 0%, 85% 2%, 95% 0%, 99% 2%, 
+        100% 12%, 98% 25%, 100% 35%, 98% 50%, 100% 65%, 98% 75%, 100% 88%, 99% 98%, 
+        92% 100%, 85% 98%, 75% 100%, 65% 98%, 55% 100%, 45% 97%, 35% 100%, 25% 98%, 15% 100%, 8% 98%, 2% 100%, 
+        0% 88%, 2% 75%, 0% 65%, 2% 50%, 0% 35%, 2% 25%, 0% 12%
+    );
+
+    padding: 35px 55px;
+    box-shadow: inset 0 0 60px rgba(40, 20, 0, 0.5);
+    overflow: hidden; /* STRICTLY NO SCROLLING */
+    
+    animation: dropIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    position: relative; /* Needed to anchor the top-left logo */
+}
+
+.slide.active {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes dropIn {
+    0% { opacity: 0; transform: scale(0.9) rotate(-2deg); filter: blur(4px); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }
+}
+
+/* TOP LEFT LOGO STYLING */
+.cu-logo-corner {
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    width: 50px; /* Adjust size to fit nicely in the margin */
+    height: 50px;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    /* Blend mode makes it look permanently stamped into the old paper */
+    mix-blend-mode: multiply;
+    filter: sepia(60%) grayscale(40%) contrast(140%);
+    opacity: 0.8;
+    z-index: 50;
+}
+
+/* Front Page Specifics */
+.front-page {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.university-header {
+    border-bottom: 5px double var(--ink);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    width: 100%;
+}
+.university-header h1 {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--ink);
+}
+.university-header h2 {
+    font-size: 32px;
+    color: var(--red-ink);
+    letter-spacing: 1px;
+}
+
+.front-page-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    width: 100%;
+}
+.topic-box {
+    background: rgba(0, 0, 0, 0.05);
+    border: 3px solid var(--ink);
+    padding: 10px 25px;
+    margin-top: 10px;
+    border-radius: 2px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+}
+.topic-box h3 { font-size: 36px; color: var(--red-ink); }
+.topic-box p { font-size: 24px; font-style: italic; font-weight: bold; }
+
+.main-portrait {
+    margin: 15px 0;
+}
+.main-portrait img {
+    width: 300px;
+    height: 220px;
+    object-fit: cover;
+    border: 4px solid var(--ink);
+    box-shadow: 6px 6px 0px rgba(40, 20, 0, 0.7);
+    filter: sepia(40%) grayscale(30%) contrast(130%) brightness(90%);
+}
+
+.author-box {
+    font-size: 26px;
+    border-top: 3px dashed var(--ink);
+    padding-top: 12px;
+    width: 70%;
+}
+
+/* Body Slides Header */
+.slide-header {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--red-ink);
+    border-bottom: 4px solid var(--ink);
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Grid Layout for alternating left/right */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+    flex: 1;
+    align-items: stretch;
+}
+
+.img-left .grid-layout { grid-template-columns: 1.2fr 2fr; }
+.img-right .grid-layout { grid-template-columns: 2fr 1.2fr; }
+
+/* Hand-drawn style image frames */
+.col-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--ink);
+    padding: 12px;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.15);
+    position: relative;
+}
+.col-image::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: -6px; right: -6px; bottom: -6px;
+    border: 1px dashed var(--ink);
+    pointer-events: none;
+}
+.col-image img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    filter: sepia(35%) grayscale(25%) contrast(120%) brightness(95%);
+}
+.caption {
+    margin-top: 10px;
+    font-size: 19px;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    color: #4a2e1b;
+}
+
+/* Text Formatting */
+.col-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+ul { margin-left: 20px; list-style-type: square; }
+
+li {
+    margin-bottom: 12px;
+    text-align: justify;
+    padding-left: 5px;
+}
+
+li strong {
+    color: var(--red-ink);
+    font-size: 26px;
+    letter-spacing: 0.5px;
+}
+
+/* Interactive References */
+.reference-list { list-style-type: decimal; margin-left: 30px; }
+.reference-list li { margin-bottom: 14px; }
+.reference-list a {
+    color: #002277;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    font-weight: bold;
+}
+.reference-list a:hover { color: var(--red-ink); }
